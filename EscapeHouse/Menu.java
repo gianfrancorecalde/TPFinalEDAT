@@ -320,8 +320,8 @@ public class Menu {
             break;
             case 4:
                 System.out.println("Ingrese:\n"+
-                                    "1 - si la habitacion tiene salida exterior\n"+
-                                    "0 - si la habitacion no tiene salida exterior"
+                                    "1 - habitacion con salida exterior\n"+
+                                    "0 - habitacion sin salida exterior"
                 );
                 int aux = sc.nextInt();
                 boolean sldaExt = false;
@@ -343,8 +343,8 @@ public class Menu {
                 System.out.println("Ingrese los metros cuadrados");
                 int resp3 = sc.nextInt();
                 System.out.println("Ingrese:\n"+
-                                    "1 - si la habitacion tiene salida exterior\n"+
-                                    "0 - si la habitacion no tiene salida exterior"
+                                    "1 - habitacion con salida exterior\n"+
+                                    "0 - habitacion sin salida exterior"
                 );
                 int aux2 = sc.nextInt();
                 boolean resp4 = false;
@@ -675,47 +675,39 @@ public class Menu {
                 "6 - Terminar"
             );
             int resp = sc.nextInt();
+            System.out.println("Ingrese clave de la habitacion origen");
+            int cod = sc.nextInt();
             switch (resp) {
                 case 1:
-                    System.out.println("Ingrese clave de la habitacion");
-                    int cod = sc.nextInt();
                     System.out.println(mostrarHabitacion(cod, habitaciones));
                 break;
                 case 2:
-                    System.out.println("Ingrese clave de la habitacion");
-                    int clave = sc.nextInt();
                     System.out.println(habitacionesContiguas(cod, habitaciones, planoCasa));
                 break;
                 case 3:
-                    System.out.println("Ingrese clave de habitacion origen");
-                    int cod1 = sc.nextInt();
                     System.out.println("Ingrese clave de habitacion destino");
-                    int cod2 = sc.nextInt();
+                    int codHab1 = sc.nextInt();
                     System.out.println("Ingrese un puntaje");
                     int ptje = sc.nextInt();
-                    if(esPosibleLLegar(cod1, cod2, ptje, habitaciones, planoCasa)){
+                    if(esPosibleLLegar(cod, codHab1, ptje, habitaciones, planoCasa)){
                         System.out.println("Existe camino");
                     }else{
                         System.out.println("No existe camino");
                     }
                 break;
                 case 4:
-                System.out.println("Ingrese clave de habitacion origen");
-                int codHab1 = sc.nextInt();
                 System.out.println("Ingrese clave de habitacion destino");
                 int codHab2 = sc.nextInt();
                 System.out.println("Ingrese clave de habitacion por la que no quiere pasar");
                 int codHab3 = sc.nextInt();
                 System.out.println("Ingrese un puntaje limite");
                 int ptjeLimit = sc.nextInt();
-                System.out.println(sinPasarPor(habitaciones, planoCasa, codHab1, codHab2, codHab3, ptjeLimit));
+                System.out.println(sinPasarPor(habitaciones, planoCasa, cod, codHab2, codHab3, ptjeLimit));
                 break;
                 case 5:
-                System.out.println("Ingrese clave de habitacion origen");
-                int clave1 = sc.nextInt();
                 System.out.println("Ingrese clave de habitacion destino");
-                int clave2 = sc.nextInt();
-                System.out.println(maximoPuntaje(clave1, clave2, habitaciones, planoCasa));
+                int codHab4 = sc.nextInt();
+                System.out.println(maximoPuntaje(cod, codHab4, habitaciones, planoCasa));
                 break;
                 case 6:
                     salir = true;
