@@ -1,4 +1,4 @@
-package Estructura.TpFinal.Dominio;
+package TPFinalEDAT.Dominio;
 
 public class Desafio {
     

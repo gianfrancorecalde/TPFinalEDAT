@@ -1,4 +1,4 @@
-package Estructura.TpFinal.Estructuras.Mapeo;
+package TPFinalEDAT.Estructuras.Mapeo;
 
 import Estructura.TpFinal.Estructuras.Lineales.*;
 

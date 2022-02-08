@@ -1,4 +1,4 @@
-package Estructura.TpFinal.EscapeHouse;
+package TPFinalEDAT.EscapeHouse;
 
 import Estructura.TpFinal.Dominio.*;
 import Estructura.TpFinal.Estructuras.Diccionario.AVL.*;

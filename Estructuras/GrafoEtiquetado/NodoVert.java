@@ -1,4 +1,4 @@
-package Estructura.TpFinal.Estructuras.GrafoEtiquetado;
+package TPFinalEDAT.Estructuras.GrafoEtiquetado;
 
 public class NodoVert {
     

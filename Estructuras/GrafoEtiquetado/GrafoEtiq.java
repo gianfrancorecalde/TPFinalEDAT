@@ -1,7 +1,7 @@
-package Estructura.TpFinal.Estructuras.GrafoEtiquetado;
+package TPFinalEDAT.Estructuras.GrafoEtiquetado;
 
 
-import Estructura.TpFinal.Estructuras.Lineales.*;
+import TPFinalEDAT.Estructuras.Lineales.*;
 
 public class GrafoEtiq {
     private NodoVert inicio;

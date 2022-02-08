@@ -1,4 +1,4 @@
-package Estructura.TpFinal.Estructuras.Lineales;
+package TPFinalEDAT.Estructuras.Lineales;
 
 public class Cola {
     

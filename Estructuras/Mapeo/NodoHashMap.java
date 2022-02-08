@@ -1,5 +1,5 @@
-package Estructura.TpFinal.Estructuras.Mapeo;
-import Estructura.TpFinal.Estructuras.Lineales.*;
+package TPFinalEDAT.Estructuras.Mapeo;
+import TPFinalEDAT.Estructuras.Lineales.*;
 
 public class NodoHashMap {
 
