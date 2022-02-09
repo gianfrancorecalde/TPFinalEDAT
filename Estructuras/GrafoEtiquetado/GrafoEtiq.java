@@ -244,11 +244,11 @@ public class GrafoEtiq {
 
     /* metodo exitencia de camino en un grafo simple */
 
-    public boolean existeCamino(Object origen, Object destino, int k){
+    public boolean existeCaminoConPesoMenorA(Object origen, Object destino, int k){
         boolean existe = false;
         Lista aux = new Lista();
         NodoVert vertInicio = ubicarVertice(origen);
-        if(vertInicio != null && ubicarVertice(destino) != null){
+        if(vertInicio != null){
             existe = caminoEnProfundidad(vertInicio, aux, destino, k);
         }
         return existe; 
@@ -260,20 +260,26 @@ public class GrafoEtiq {
         boolean exito = false;
         if(v != null){
             System.out.println(vis.toString() + " "+ total);
-            if(v.getElem().equals(destino) && total == 0){
+            if(v.getElem().equals(destino)){
                 // ver el control del total == 0
                 vis.insertar(v.getElem(), vis.longitud()+1);
                 exito = true;
             }else{
-                vis.insertar(v.getElem(), vis.longitud()+1);
-                NodoAdy ady = v.getPrimerAdy();
-                while(ady != null && !exito){
-                // visita en profundidad los adyacentes de v aun no visitados
-                    if(vis.localizar(ady.getVertice().getElem())<0){
-                        exito =  caminoEnProfundidad(ady.getVertice(), vis, destino, total-(int)ady.getEtiq());
+                
+                    vis.insertar(v.getElem(), vis.longitud()+1);
+                    System.out.println(v.getElem());
+                    NodoAdy ady = v.getPrimerAdy();
+                    while(ady != null && !exito && total >= 0){
+                    // visita en profundidad los adyacentes de v aun no visitados
+                        if(vis.localizar(ady.getVertice().getElem())<0){
+                            exito =  caminoEnProfundidad(ady.getVertice(), vis, destino, total-(int)ady.getEtiq());
+                        }
+                        ady = ady.getSigAdyacente();
+                    } 
+                    if (!exito) {
+                        vis.eliminar(vis.longitud());
                     }
-                    ady = ady.getSigAdyacente();
-                }
+
             }
         }
         return exito;
@@ -333,6 +339,31 @@ public class GrafoEtiq {
             cadena += "No existen vertices";
         }
         return cadena;
+    }
+
+    public static void main(String[] args) {
+        GrafoEtiq g = new GrafoEtiq();
+
+        g.insertarVertice('A');
+        g.insertarVertice('B');
+        g.insertarVertice('C');
+        g.insertarVertice('D');
+        g.insertarVertice('E');
+        g.insertarVertice('F');
+        g.insertarVertice('G');
+
+        g.insertarArco('A', 'B', 20);
+        g.insertarArco('A', 'C', 20);
+        g.insertarArco('A', 'D', 10);
+        g.insertarArco('A', 'E', 10);
+        g.insertarArco('B', 'F', 20);
+        g.insertarArco('C', 'F', 10);
+        g.insertarArco('D', 'C', 40);
+        g.insertarArco('E', 'D', 20);
+        g.insertarArco('D', 'G', 10);
+        
+        System.out.println(g.toString());
+        g.existeCaminoConPesoMenorA('A', 'F', 50);
     }
     
 }
