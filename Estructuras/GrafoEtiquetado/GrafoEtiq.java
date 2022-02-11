@@ -121,11 +121,40 @@ public class GrafoEtiq {
                     }
                     ady = ady.getSigAdyacente();
                 }
-                if(exito){
-                    // seteo el enlace del vertice origen con un nuevo adyacente que tendrá como vertice al destino y como adyacente al primer vertice adyacente del vertice origen.
-                    auxO.setPrimerAdy(new NodoAdy(auxD, auxO.getPrimerAdy(), etiq));
-                    auxD.setPrimerAdy(new NodoAdy(auxO, auxD.getPrimerAdy(), etiq));
+                
+            }
+        }
+        return exito;
+    }
+
+    public boolean insertarArco2(Object origen, Object destino, Object etiq){
+        boolean exito = true;
+        NodoVert auxBusqueda = this.inicio, vertD = null, vertO = null;
+        NodoAdy ady;
+        while((vertO == null || vertD == null) && auxBusqueda != null){
+            if (auxBusqueda.getElem().equals(origen)) {
+                vertO = auxBusqueda;
+            }
+            if (auxBusqueda.getElem().equals(destino)) {
+                vertD = auxBusqueda;
+            }
+            auxBusqueda = auxBusqueda.getSigVert();
+        }
+        if (vertO == null && vertD == null) {
+            exito = false;
+        } else {
+            ady = vertO.getPrimerAdy();
+            while(exito && ady != null){
+                if(ady.getVertice().getElem().equals(destino)){
+                    exito = false;
                 }
+                ady = ady.getSigAdyacente();
+            }
+            if(exito){
+            // seteo el enlace del vertice origen con un nuevo adyacente que tendrá como vertice al destino 
+            // y como adyacente al primer vertice adyacente del vertice origen.
+                vertO.setPrimerAdy(new NodoAdy(vertD, vertO.getPrimerAdy(), etiq));
+                vertD.setPrimerAdy(new NodoAdy(vertO, vertD.getPrimerAdy(), etiq));   
             }
         }
         return exito;
