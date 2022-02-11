@@ -255,31 +255,31 @@ public class GrafoEtiq {
     }
 
     private boolean caminoEnProfundidad(NodoVert v, Lista vis, Object destino, int total){
-        // renombrar los metodo eje: existeCaminoConPesoMenorA
-        //
         boolean exito = false;
         if(v != null){
-            System.out.println(vis.toString() + " "+ total);
-            if(v.getElem().equals(destino)){
-                // ver el control del total == 0
-                vis.insertar(v.getElem(), vis.longitud()+1);
+            vis.insertar(v.getElem(), vis.longitud()+1);
+            //System.out.println(vis.toString() + " "+ total);
+            if(v.getElem().equals(destino) && total >= 0){
                 exito = true;
             }else{
-                
-                    vis.insertar(v.getElem(), vis.longitud()+1);
-                    System.out.println(v.getElem());
+                if (total < 0) {
+                    //Elimina el vertice que supero el limite fijado
+                    vis.eliminar(vis.longitud());
+                } else {
                     NodoAdy ady = v.getPrimerAdy();
-                    while(ady != null && !exito && total >= 0){
+                    while(ady != null && !exito){
                     // visita en profundidad los adyacentes de v aun no visitados
                         if(vis.localizar(ady.getVertice().getElem())<0){
+                            // Si v no esta en la lista de visitado, lo visita
                             exito =  caminoEnProfundidad(ady.getVertice(), vis, destino, total-(int)ady.getEtiq());
                         }
                         ady = ady.getSigAdyacente();
                     } 
                     if (!exito) {
+                        // Elimina el vertice por el cual no existe camino al vrertice destino
                         vis.eliminar(vis.longitud());
                     }
-
+                }    
             }
         }
         return exito;
@@ -287,12 +287,12 @@ public class GrafoEtiq {
 
     /* metodo que devuelve una cola de caminos sin pasar por un vertice en especifico y sin superar una cantidad */
 
-    public Lista caminos(Object origen, Object destino, Object vertInnhabilitado, int k){
+    public Lista caminosSinPasarPorVerticeInhabilitado(Object origen, Object destino, Object vertInhabilitado, int k){
         Lista aux = new Lista();
         Lista caminos = new Lista();
         NodoVert vertInicio = ubicarVertice(origen);
-        if(vertInicio != null && ubicarVertice(destino) != null && !vertInicio.getElem().equals(vertInnhabilitado)){
-            caminosEnProfundidad(vertInicio, caminos, aux, destino, vertInnhabilitado, k);
+        if(vertInicio != null && ubicarVertice(destino) != null && !vertInicio.getElem().equals(vertInhabilitado)){
+            caminosEnProfundidad(vertInicio, caminos, aux, destino, vertInhabilitado, k);
         }
         return caminos;
     }
