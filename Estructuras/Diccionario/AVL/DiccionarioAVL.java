@@ -1,5 +1,5 @@
-package Estructura.TpFinal.Estructuras.Diccionario.AVL;
-import Estructura.TpFinal.Estructuras.Lineales.*;
+package TPFinalEDAT.Estructuras.Diccionario.AVL;
+import TPFinalEDAT.Estructuras.Lineales.*;
 
 public class DiccionarioAVL {
     

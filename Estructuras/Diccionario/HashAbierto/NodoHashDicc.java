@@ -1,4 +1,4 @@
-package Estructura.TpFinal.Estructuras.Diccionario.HashAbierto;
+package TPFinalEDAT.Estructuras.Diccionario.HashAbierto;
 
 public class NodoHashDicc {
 

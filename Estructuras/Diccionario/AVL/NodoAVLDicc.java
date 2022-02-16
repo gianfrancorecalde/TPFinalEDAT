@@ -1,4 +1,4 @@
-package Estructura.TpFinal.Estructuras.Diccionario.AVL;
+package TPFinalEDAT.Estructuras.Diccionario.AVL;
 
 public class NodoAVLDicc {
     

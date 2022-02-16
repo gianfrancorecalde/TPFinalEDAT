@@ -1,6 +1,6 @@
 package TPFinalEDAT.Estructuras.Mapeo;
 
-import Estructura.TpFinal.Estructuras.Lineales.*;
+import TPFinalEDAT.Estructuras.Lineales.*;
 
 public class HashMapAbierto {
     

@@ -1,6 +1,4 @@
-package Estructura.TpFinal.Estructuras.Diccionario.HashAbierto;
-
-import Estructura.TpFinal.Estructuras.Lineales.*;
+package TPFinalEDAT.Estructuras.Diccionario.HashAbierto;
 
 public class DiccionarioHash {
     

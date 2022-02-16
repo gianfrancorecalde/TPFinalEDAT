@@ -1,11 +1,11 @@
 package TPFinalEDAT.EscapeHouse;
 
-import Estructura.TpFinal.Dominio.*;
-import Estructura.TpFinal.Estructuras.Diccionario.AVL.*;
-import Estructura.TpFinal.Estructuras.Diccionario.HashAbierto.*;
-import Estructura.TpFinal.Estructuras.GrafoEtiquetado.*;
-import Estructura.TpFinal.Estructuras.Lineales.*;
-import Estructura.TpFinal.Estructuras.Mapeo.HashMapAbierto;
+import TPFinalEDAT.Dominio.*;
+import TPFinalEDAT.Estructuras.Diccionario.AVL.*;
+import TPFinalEDAT.Estructuras.Diccionario.HashAbierto.*;
+import TPFinalEDAT.Estructuras.GrafoEtiquetado.*;
+import TPFinalEDAT.Estructuras.Lineales.*;
+import TPFinalEDAT.Estructuras.Mapeo.HashMapAbierto;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -47,7 +47,7 @@ public class Menu {
         switch (resp) {
             case 1:
                 cargarInicial(habitaciones, desafios, equipos, planoCasa);
-                planoCasa.existeCamino(habitaciones.obtenerDato(7), habitaciones.obtenerDato(18), 230);
+                planoCasa.existeCaminoConPesoMenorA(habitaciones.obtenerDato(7), habitaciones.obtenerDato(18), 230);
             break;
             case 2:
                 manejoABM(habitaciones, planoCasa, equipos, desafios);
@@ -79,7 +79,7 @@ public class Menu {
 
     private static void escribirLog(String elem) {
         try {
-            FileWriter escribir = new FileWriter("C:\\Users\\Gian Franco Recalde\\Desktop\\UNCO- Licenciatura en Sistemas\\2 AÑO\\Estructura de Datos\\Historial.txt");
+            FileWriter escribir = new FileWriter("C:\\Users\\Gian Franco Recalde\\Desktop\\UNCO- Licenciatura en Sistemas\\2 AÑO\\TPFinalEDATs\\Historial.txt");
 
             //Escribimos en el archivo con el metodo write 
             escribir.write(elem + "\n");
@@ -101,7 +101,7 @@ public class Menu {
         StringTokenizer token;
         escribirLog("Carga inicial, iniciada");
         try(
-            FileReader fr = new FileReader("C:\\Users\\Gian Franco Recalde\\Desktop\\UNCO- Licenciatura en Sistemas\\2 AÑO\\Estructura de Datos\\OtrosDatos.txt");
+            FileReader fr = new FileReader("C:\\Users\\Gian Franco Recalde\\Desktop\\UNCO- Licenciatura en Sistemas\\2 AÑO\\TPFinalEDATs\\OtrosDatos.txt");
             ){
                 int valor = fr.read();
                 while(valor!=-1){
@@ -754,7 +754,7 @@ public class Menu {
         Habitacion hab1 = (Habitacion)habitaciones.obtenerDato(codHab1);
         Habitacion hab2 = (Habitacion)habitaciones.obtenerDato(codHab2);
         if(hab1 != null && hab2 != null){
-            existeCamino = planoCasa.existeCamino(hab1, hab2, ptje);
+            existeCamino = planoCasa.existeCaminoConPesoMenorA(hab1, hab2, ptje);
         }
         return existeCamino;
     }
@@ -767,7 +767,7 @@ public class Menu {
         Habitacion hab2 = (Habitacion)habitaciones.obtenerDato(codHab2);
         Habitacion hab3 = (Habitacion)habitaciones.obtenerDato(codHab3);
         if(hab1 != null && hab3 != null && hab2 != null){
-            lis = planoCasa.caminos(hab1, hab2, hab3, ptjeLimite);
+            lis = planoCasa.caminosSinPasarPorVerticeInhabilitado(hab1, hab2, hab3, ptjeLimite);
             if(!lis.esVacia()){
                 for(i=1; i<=lis.longitud(); i++){
                     aux = (Lista)lis.recuperar(i);
@@ -810,7 +810,7 @@ public class Menu {
                 case 1:
                     System.out.println("Ingrese el puntaje del desafio");
                     int ptje = sc.nextInt();
-                    System.out.println(mostrarDesafios(ptje, desafios);
+                    System.out.println(mostrarDesafios(ptje, desafios));
                 break;
                 case 2:
                     System.out.println("Ingrese nombre del equipo");
