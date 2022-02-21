@@ -64,12 +64,14 @@ public class DiccionarioHash {
 
         int pos = Math.abs(clave.hashCode()) % this.tamanio;
         NodoHashDicc aux = this.hash[pos];
+        boolean exito = false;
         Object dato = null;
 
-        while(dato == null && aux != null){
+        while(!exito && aux != null){
             // Busca si esta el nuevo elemento en esa posicion
             if(aux.getClave().equals(clave)){
                 dato = aux.getDato();
+                exito = true;
             }
             aux = aux.getEnlace();
         }

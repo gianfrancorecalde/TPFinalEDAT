@@ -20,22 +20,32 @@ public class GrafoEtiq {
 
     /* Metodo para ubicar vertice */
     private NodoVert ubicarVertice(Object buscado) {
+        boolean existe = false;
         NodoVert aux = this.inicio;
         if (!this.esVacio()) {
-            while (aux != null && !aux.getElem().equals(buscado)) {
-                aux = aux.getSigVert();
+            while (!existe && aux != null) {
+                if (aux.getElem().equals(buscado)) {
+                    existe = true;
+                } else {
+                    aux = aux.getSigVert();
+                }
             }
         }
         return aux;
     }
 
     public Object modificar(Object buscado) {
+        boolean existe = false;
         NodoVert aux = this.inicio;
         Object auxElemento = null;
-        while (!aux.getElem().equals(buscado) && aux != null) {
-            aux = aux.getSigVert();
+        while ( !existe && aux != null) {
+            if (aux.getElem().equals(buscado)) {
+                existe = true;
+            } else {
+                aux = aux.getSigVert();
+            }
         }
-        if (aux != null) {
+        if (existe) {
             auxElemento = aux.getElem();
         }
         return auxElemento;
@@ -47,14 +57,24 @@ public class GrafoEtiq {
      */
 
     public boolean insertarVertice(Object newVert) {
-        boolean exito = false;
+        boolean exito = false,existe = false;
         NodoVert aux = this.inicio;
-        while (!aux.getElem().equals(newVert) && aux != null) {
-            aux = aux.getSigVert();
-        }
-        if (aux == null) {
-            this.inicio = new NodoVert(newVert, this.inicio, null);
+        if (this.esVacio()) {
+            this.inicio = new NodoVert(newVert, null, null);
             exito = true;
+        } else {
+            NodoVert ant = aux;
+            while (!existe && aux != null) {
+                if (aux.getElem().equals(newVert)) {
+                    existe = true;
+                }
+                ant = aux;
+                aux = aux.getSigVert();
+            }
+            if (!existe) {
+                ant.setSigVert(new NodoVert(newVert, ant.getSigVert(), null));
+                exito = true;
+            }
         }
         return exito;
     }
@@ -108,10 +128,14 @@ public class GrafoEtiq {
     /* Metodo para verificar la existencia de un vertice */
 
     public boolean existeVertice(Object buscado) {
-        boolean exito = false;
+        boolean exito = false,existe =false;
         NodoVert aux = this.inicio;
-        while (!aux.getElem().equals(buscado) && aux != null) {
-            aux = aux.getSigVert();
+        while (!existe && aux != null) {
+            if (aux.getElem().equals(buscado)) {
+                existe = true;
+            } else {
+                aux = aux.getSigVert();
+            }
         }
         if (aux != null) {
             exito = true;
@@ -122,10 +146,10 @@ public class GrafoEtiq {
     /* Metodos para insertar y eliminar arcos (Grafo simple etiquetado) */
 
     public boolean insertarArco(Object origen, Object destino, Object etiq) {
-        boolean exito = true;
+        boolean exito = true, verticesEncontrados = false;
         NodoVert auxBusqueda = this.inicio, vertD = null, vertO = null;
         NodoAdy ady;
-        while ((vertO == null || vertD == null) && auxBusqueda != null) {
+        while (!verticesEncontrados && auxBusqueda != null) {
             //Ubico vertices
             if (auxBusqueda.getElem().equals(origen)) {
                 vertO = auxBusqueda;
@@ -133,11 +157,12 @@ public class GrafoEtiq {
             if (auxBusqueda.getElem().equals(destino)) {
                 vertD = auxBusqueda;
             }
+            if(vertO != null && vertD != null){
+                verticesEncontrados = true;
+            }
             auxBusqueda = auxBusqueda.getSigVert();
         }
-        if (vertO == null && vertD == null) {
-            exito = false;
-        } else {
+        if (verticesEncontrados) {
             ady = vertO.getPrimerAdy();
             while (exito && ady != null) {
                 if (ady.getVertice().getElem().equals(destino)) {
@@ -160,7 +185,7 @@ public class GrafoEtiq {
         // elimino los arcos con la etiqueta pasa por paramentro, y que vayan del
         // vertice origen al destino y visceversa.
         boolean exito = false;
-        NodoVert vertO = this.ubicarVertice(origen);
+        NodoVert vertO = this.inicio;
         NodoAdy ady, adyAnterior;
         if (vertO != null) {
             ady = vertO.getPrimerAdy();
@@ -201,14 +226,18 @@ public class GrafoEtiq {
     public boolean existeArco(Object origen, Object destino, Object etiqueta) {
         // verifica la existencia de los arcos que van de vertice origen a vertice
         // destino y visceversa; y que sea etiquetado segun el valor de paramatro
-        boolean existeArcoIda = false, existeArcoVuelta = false;
+        boolean existeArcoIda = false, existeArcoVuelta = false, existeVertice = false;
         ;
         NodoVert vertO = this.inicio;
         NodoAdy ady;
-        while (!vertO.getElem().equals(origen) && vertO != null) {
-            vertO = vertO.getSigVert();
+        while (!existeVertice&& vertO != null) {
+            if (vertO.getElem().equals(origen)) {
+                existeVertice = true;
+            } else {
+                vertO = vertO.getSigVert();
+            }
         }
-        if (vertO != null) {
+        if (existeVertice) {
             ady = vertO.getPrimerAdy();
             while (!existeArcoIda && ady != null) {
                 // recorro arcos del vertice origen
@@ -241,15 +270,20 @@ public class GrafoEtiq {
     public Lista verticesContiguos(Object v) {
         // Devuelve un listado con los vertices contiguos y las etiquietas de los arcos
         Lista vertContiguos = new Lista();
+        boolean existeVertice = false;  
         NodoVert vertO = this.inicio;
-        while (!vertO.getElem().equals(v) && vertO != null) {
-            vertO = vertO.getSigVert();
+        while (!existeVertice&& vertO != null) {
+            if (vertO.getElem().equals(v)) {
+                existeVertice = true;
+            } else {
+                vertO = vertO.getSigVert();
+            }
         }
-        if (vertO != null) {
+        if (existeVertice) {
             NodoAdy ady = vertO.getPrimerAdy();
             while (ady != null) {
-                Object[] arr = { ady.getVertice().getElem(), ady.getEtiq() };
-                vertContiguos.insertar(arr, vertContiguos.longitud() + 1);
+                vertContiguos.insertar(ady.getVertice().getElem(), vertContiguos.longitud() + 1);
+                vertContiguos.insertar(ady.getEtiq(), vertContiguos.longitud() + 1);
                 ady = ady.getSigAdyacente();
             }
         }
@@ -259,15 +293,19 @@ public class GrafoEtiq {
     public Object valorDelArco(Object v1, Object v2) {
         // Devuelve la etiqueta del arco entre vertice 1 y vercie 2
         Object valor = null;
+        boolean existeVertice = false;
         NodoVert vertO = this.inicio;
-        while (!vertO.getElem().equals(v1) && vertO != null) {
-            // Ubico vertice
-            vertO = vertO.getSigVert();
+        while (!existeVertice&& vertO != null) {
+            if (vertO.getElem().equals(v1)) {
+                existeVertice = true;
+            } else {
+                vertO = vertO.getSigVert();
+            }
         }
-        if (vertO != null) {
+        if (existeVertice) {
             NodoAdy ady = vertO.getPrimerAdy();
             while (ady != null) {
-                if (ady.getVertice().equals(v2)) {
+                if (ady.getVertice().getElem().equals(v2)) {
                     valor = ady.getEtiq();
                 }
                 ady = ady.getSigAdyacente();
@@ -279,14 +317,17 @@ public class GrafoEtiq {
     /* metodo exitencia de camino en un grafo simple */
 
     public boolean existeCaminoConPesoMenorA(Object origen, Object destino, int k) {
-        boolean existe = false;
+        boolean existe = false, existeVertice = false;;
         Lista aux = new Lista();
         NodoVert vertInicio = this.inicio;
-        while (!vertInicio.getElem().equals(origen) && vertInicio != null) {
-            //Ubico vertice
-            vertInicio = vertInicio.getSigVert();
+        while (!existeVertice&& vertInicio!= null) {
+            if (vertInicio.getElem().equals(origen)) {
+                existeVertice = true;
+            } else {
+                vertInicio = vertInicio.getSigVert();
+            }
         }
-        if (vertInicio != null) {
+        if (existeVertice) {
             existe = caminoEnProfundidad(vertInicio, aux, destino, k);
         }
         return existe;
@@ -322,14 +363,18 @@ public class GrafoEtiq {
 
     public Lista caminosSinPasarPorVerticeInhabilitado(Object origen, Object destino, Object vertInhabilitado, int k) {
         Lista aux = new Lista();
+        boolean existeVertice = false;
         Lista caminos = new Lista();
         if (!origen.equals(vertInhabilitado) && !destino.equals(vertInhabilitado)) {
             NodoVert vertInicio = this.inicio;
-            while (!vertInicio.getElem().equals(origen)) {
-                //Ubico vertice
-                vertInicio = vertInicio.getSigVert();
+            while (!existeVertice&& vertInicio != null) {
+                if (vertInicio.getElem().equals(origen)) {
+                    existeVertice = true;
+                } else {
+                    vertInicio = vertInicio.getSigVert();
+                }
             }
-            if (vertInicio != null) {
+            if (existeVertice) {
                 caminosEnProfundidad(vertInicio, caminos, aux, destino, vertInhabilitado, k);
             }
         }
@@ -341,19 +386,19 @@ public class GrafoEtiq {
             aux.insertar(v.getElem(), aux.longitud() + 1);
             if (v.getElem().equals(destino)) {
                 caminos.insertar(aux.clone(), caminos.longitud() + 1);
+                aux.eliminar(aux.longitud());
             } else {
-                aux.insertar(v.getElem(), aux.longitud() + 1);
                 NodoAdy ady = v.getPrimerAdy();
                 while (ady != null) {
                     // visita en profundidad los adyacentes de v aun no visitados
                     if (!ady.getVertice().getElem().equals(vertInhabilitado)) {
                         if (aux.localizar(ady.getVertice().getElem()) < 0) {
                             caminosEnProfundidad(ady.getVertice(), caminos, aux, destino, vertInhabilitado,k - (int) ady.getEtiq());
-                            aux.eliminar(aux.longitud());
                         }
                     }
                     ady = ady.getSigAdyacente();
                 }
+                aux.eliminar(aux.longitud());
             }
         }
     }

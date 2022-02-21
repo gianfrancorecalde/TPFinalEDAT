@@ -27,13 +27,14 @@ public class HashMapAbierto {
     public boolean asociar(Object valorDominio, Object valorRango){
 
         boolean encontrado = false;
-        if(!this.esVacio()){
             int pos = valorDominio.hashCode() % this.tamanio;   // Calcula la posicion en la que se va a guarda el valorDominio
             NodoHashMap aux = this.hash[pos];                      // Obtiene el pimer nodo en esa posicion
             while(!encontrado && aux != null){
                 // Busca si esta el el nuevo dominio en esa posicion
                 encontrado = aux.getDominio().equals(valorDominio);
-                aux = aux.getEnlace();
+                if (!encontrado) {
+                    aux = aux.getEnlace();
+                }
             }
             if(encontrado){
                 // el dominio existe entonces solo agrego el valorRango
@@ -42,9 +43,8 @@ public class HashMapAbierto {
                 // El dominio no existe, lo creo y agrego el valorRango 
                 this.hash[pos] = new NodoHashMap(valorDominio, this.hash[pos]);
                 this.hash[pos].getRango().insertar(valorRango, this.hash[pos].getRango().longitud()+1);
-                this.cant++;
+                this.cant++; 
             }
-        }
         return !encontrado;
     }
 
