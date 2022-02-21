@@ -49,17 +49,13 @@ public class Menu {
                             "5 - Consultas sobre Equipos\n" +
                             "6 - Mostrar graficos del sistema\n" +
                             "7 - Terminar");
-            int resp;
+            int resp = 0;
             try{
-             resp= Integer.parseInt(sc.nextLine());
+             resp = Integer.parseInt(sc.nextLine());
             }catch(Exception a){
-                resp = 0;
-                System.out.println("opcion erronea");
+                System.out.println("Vuelva a Intentarlo");
             }
             switch (resp) {
-                case 0:
-                System.err.println("Vuevla aintentar");
-                break;
                 case 1:
                     cargarInicial(habitaciones, desafios, equipos, planoCasa);
                     escribirLog("Carga inicial finalizada");
@@ -1188,7 +1184,7 @@ public class Menu {
         }
         if (contiguas) {
             Habitacion hab = (Habitacion)habitaciones.obtenerDato(eq.getHab());
-            Lista lis = desafios.listarRangoMin((int) planoCasa.valorDelArco(hab, habContigua));
+            Lista lis = desafios.listarRangoMayorA((int) planoCasa.valorDelArco(hab, habContigua));
             cadena += "Posibles desafios para resolver\n" + lis.toString();
         } else {
             cadena += "Las habitaciones no son contiguas";

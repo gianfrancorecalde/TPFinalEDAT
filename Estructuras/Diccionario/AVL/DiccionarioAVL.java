@@ -487,19 +487,19 @@ public class DiccionarioAVL {
 
     /* LISTAR RANGO CON MIN */
 
-    public Lista listarRangoMin(Comparable elem){
+    public Lista listarRangoMayorA(Comparable elem){
         Lista lis = new Lista();
         if (!this.esVacio()) {
-            listarRangoMinAux(this.raiz, elem, lis);
+            listarRangoMayorAAux(this.raiz, elem, lis);
         }
         return lis;
     }
 
-    private void listarRangoMinAux(NodoAVLDicc nodo, Comparable elem,Lista lis){
+    private void listarRangoMayorAAux(NodoAVLDicc nodo, Comparable elem,Lista lis){
         if (nodo != null) {
             if (elem.compareTo(nodo.getClave())<0) {
                 // el elem es menor que el nodo, entonces analizo rama izq
-                listarRangoMinAux(nodo.getIzquierdo(), elem, lis);
+                listarRangoMayorAAux(nodo.getIzquierdo(), elem, lis);
             }
             if (elem.compareTo(nodo.getClave()) == 0 || elem.compareTo(nodo.getClave())<0) {
                 // voy a listar cuando:
@@ -507,7 +507,7 @@ public class DiccionarioAVL {
                 // El elem sea menor al nodo
                 lis.insertar(nodo.getClave(), lis.longitud()+1);
             }
-            listarRangoMinAux(nodo.getDerecho(), elem, lis);
+            listarRangoMayorAAux(nodo.getDerecho(), elem, lis);
         }
     }
 }
